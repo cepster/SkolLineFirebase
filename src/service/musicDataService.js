@@ -1,8 +1,9 @@
 // import Firebase from 'github:firebase/firebase-bower@3.0.0';
 import _ from 'underscore';
+import { DataService } from './dataService';
+import { inject } from 'aurelia-framework';
 
 let fb;
-const fbUrl = 'https://skolline.firebaseio.com/music';
 
 const sanitizeMusic = function(music) {
   for (let i in music) {
@@ -13,9 +14,10 @@ const sanitizeMusic = function(music) {
   return music;
 };
 
+@inject(DataService)
 export class MusicDataService {
-  constructor() {
-    fb = new Firebase(fbUrl);
+  constructor(dataService) {
+    fb = new Firebase(dataService.endpoint);
     this.musicCache = [];
 
     fb.on('child_added', (snapshot, id) => {
@@ -25,7 +27,7 @@ export class MusicDataService {
     });
 
     fb.on('child_removed', (snapshot) => {
-      this.musicCache = _.without(this.musicCache, _.findWhere(this.musicCache, {id: snapshot.key()}));    
+      this.musicCache = _.without(this.musicCache, _.findWhere(this.musicCache, {id: snapshot.key()}));
     });
   }
 
