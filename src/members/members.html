@@ -1,0 +1,54 @@
+<template>
+  <div class="ui grid">
+    <div class="three wide column">
+      <div class="ui vertical fluid tabular menu">
+        <a repeat.for="member of members" click.delegate="$parent.loadDetail(member._id)"
+           class="item ${$parent.selectedMember._id==member._id? 'active': ''}">
+           ${member.name}
+         </a>
+      </div>
+    </div>
+    <div class="thirteen wide stretched column">
+      <div class="ui segment">
+        <div if.bind="!selectedMember">
+          Please select a member on the left to view detail
+        </div>
+        <div if.bind="selectedMember">
+          <form class="ui form">
+            <div class="field">
+              <label>Name</label>
+              <div class="ui input">
+                <input type="text" value.bind="selectedMember.name"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Instrument</label>
+              <div class="ui input">
+                <input type="text" value.bind="selectedMember.instrument"/>
+              </div>
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <div class="ui input">
+                  <input type="text" value.bind="selectedMember.email"/>
+                </div>
+            </div>
+
+            <div class="field">
+              <label>Phone Number</label>
+              <div class="ui input">
+                <input type="text" value.bind="selectedMember.phoneNumber"
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui segment" if.bind="selectedMember">
+        <div class="ui primary button" click.delegate="saveMember()">Save</div>
+        <div class="ui button" click.delegate="deleteMember()">Delete</div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,49 @@
+<template>
+  <require from="./custom/datepicker"></require>
+  <require from="./custom/adminOnly"></require>
+  <require from="./custom/adminOnlyInput"></require>
+
+  <h3>Gig Detail</h3>
+
+  <a route-href="route:gigs;">Back to Gigs...</a>
+
+  <form class="ui form">
+    <div class="field">
+      <label>Name</label>
+      <div class="ui input">
+        <input type="text" placeholder="name" admin-only-input value.bind="gig.name"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Date</label>
+      <div class="ui input">
+        <input date-picker admin-only-input value.bind="gig.date"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Start Time</label>
+      <div class="ui input">
+        <input type="text" admin-only-input placeholder="Start Time" value.bind="gig.startTime"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>End Time</label>
+      <div class="ui input">
+        <input type="text" admin-only-input placeholder="End Time" value.bind="gig.endTime"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Notes</label>
+      <div class="ui input">
+        <input type="text" admin-only-input placeholder="Notes" value.bind="gig.notes"/>
+      </div>
+    </div>
+
+    <button admin-only class="ui primary button" click.delegate="saveGig()">Save</button>
+    <button admin-only class="ui button" click.delegate="deleteGig">Delete Gig</button>
+  </form>
+</template>
