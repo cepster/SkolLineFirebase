@@ -22,13 +22,6 @@ export class Music {
 
   }
 
-  loadDetail(id) {
-    musicDataService.getMusicById(id)
-      .then(response =>{
-        this.selectedMusic = response;
-      });
-  }
-
   newMusic() {
     router.navigateToRoute('musicDetail/0');
   }

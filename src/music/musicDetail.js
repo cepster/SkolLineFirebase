@@ -18,6 +18,8 @@ export class MusicDetail {
       musicDataService.getMusicById(params.musicID).then((response) => {
         this.tune = response;
       });
+    } else {
+      this.tune = {};
     }
   }
 
