@@ -1,66 +1,21 @@
-<!--<template>
-  <require from="../custom/adminOnly"></require>
-
-  <div class="ui grid">
-    <div class="three wide column">
-      <div class="ui vertical fluid tabular menu">
-        <a repeat.for="tune of music" click.delegate="$parent.loadDetail(tune._id)"
-           class="item ${$parent.selectedMusic._id==tune._id? 'active': ''}">
-           ${tune.name}
-         </a>
-
-         <div admin-only class="ui button" click.delegate="newMusic()">New Music</div>
-      </div>
-    </div>
-    <div class="thirteen wide stretched column">
-      <div class="ui segment">
-        <div if.bind="!selectedMusic">
-          Please select a tune on the left to view detail
-        </div>
-        <div if.bind="selectedMusic">
-          <b>Music</b>
-          <div repeat.for="music of selectedMusic.music">
-            <a href="${music.url}" target="_">
-              ${music.description}
-            </a>
-            <br/>
-          </div>
-
-          <br/><br/>
-
-          <b>MP3</b>
-          <div repeat.for="sound of selectedMusic.sounds">
-            <audio controls>
-              <source src="${sound.url}&raw=1" type="audio/mpeg">
-            </audio>
-            <a href="${sound.url}&dl=1">Download</a>
-            <br/>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>-->
-
 <template>
   <require from="../custom/adminOnly"></require>
   <section class="au-animate">
     <h2>${heading}</h2>
     <div>
       <div class="col-md-2">
-        <ul class="well nav nav-pills nav-stacked">    
+        <ul class="well nav nav-pills nav-stacked">
          <li repeat.for="tune of getMusic()" class="${row.isActive ? 'active' : ''}">
-           <a route-href="route:musicDetail; params.bind: {musicID:tune.id}">${tune.name}</a>
+           <a route-href="route:detail; params.bind: {musicID:tune.id}">${tune.name}</a>
          </li>
          <li>
-           <a route-href="route:musicDetail; params.bind: {musicID:0}">+ New Music</a>
+           <a route-href="route:detail; params.bind: {musicID:0}">+ New Music</a>
          </li>
         </ul>
       </div>
-      <!--<div admin-only class="ui button" click.delegate="newMusic()">New Music</div>-->
-      <!--<div class="col-md-10" style="padding: 0">
+      <div class="col-md-10" style="padding: 0">
         <router-view></router-view>
-      </div>-->
+      </div>
     </div>
   </section>
 </template>

@@ -21,19 +21,6 @@ export class MusicDetail {
     }
   }
 
-  //TODO: Implement this
-  canSave() {
-      if(this.tune){
-        console.log(this.tune.name);
-      }
-    return this.tune && this.tune.name;
-  }
-
-  //TODO: Implement this
-  canDelete() {
-    return this.tune && this.tune.id;
-  }
-
   save() {
     musicDataService.saveMusic(this.tune, ()=> {
       toastr.success('Saved', {timeout: 2000});

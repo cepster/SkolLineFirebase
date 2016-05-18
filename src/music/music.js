@@ -19,10 +19,7 @@ export class Music {
   }
 
   activate(params) {
-    // return musicDataService.getAllMusic();
-            //  .then(response => {
-            //    this.music = [response.response];
-            //  });
+
   }
 
   loadDetail(id) {
@@ -35,16 +32,17 @@ export class Music {
   newMusic() {
     router.navigateToRoute('musicDetail/0');
   }
-  
+
   getMusic() {
     return musicDataService.musicCache;
   }
 
-  // configureRouter(config, childRouter) {
-  //   config.map([
-  //     { route: 'detail',  name: 'detail',  moduleId: 'musicDetail', title: 'Child Router' }
-  //   ]);
+  configureRouter(config, childRouter) {
+    config.map([
+      {route: '',                name: 'musicDetailEmpty',       moduleId: 'music/musicDetailEmpty',    title: 'Choose a piece of music',   nav: true},
+      {route: 'detail/:musicID', name: 'detail', moduleId: 'music/musicDetail'}
+    ]);
 
-  //   this.childRouter = childRouter;
-  // }
+    this.childRouter = childRouter;
+  }
 }
