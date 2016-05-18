@@ -16,10 +16,12 @@ export class MusicDataService {
     return new Promise(function(resolve, reject) {
       resolve({'content': [
         {
+          _id: 1,
           name: 'Smack',
           href: 'detail/1'
         },
         {
+          _id: 2,
           name: 'Skol B',
           href: 'detail/2'
         }

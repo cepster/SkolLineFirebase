@@ -50,14 +50,17 @@
       <div class="col-md-2">
         <ul class="well nav nav-pills nav-stacked">    
          <li repeat.for="tune of music" class="${row.isActive ? 'active' : ''}">
-           <a href.bind="tune.href">${tune.name}</a>
+           <a route-href="route:musicDetail; params.bind: {musicID:tune._id}">${tune.name}</a>
+         </li>
+         <li>
+           <a route-href="route:musicDetail; params.bind: {musicID:0}">+ New Music</a>
          </li>
         </ul>
       </div>
-      <div admin-only class="ui button" click.delegate="newMusic()">New Music</div>
-      <div class="col-md-10" style="padding: 0">
+      <!--<div admin-only class="ui button" click.delegate="newMusic()">New Music</div>-->
+      <!--<div class="col-md-10" style="padding: 0">
         <router-view></router-view>
-      </div>
+      </div>-->
     </div>
   </section>
 </template>

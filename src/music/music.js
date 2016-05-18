@@ -36,11 +36,11 @@ export class Music {
     router.navigateToRoute('musicDetail/0');
   }
 
-  configureRouter(config, childRouter) {
-    config.map([
-      { route: 'detail',  name: 'detail',  moduleId: 'musicDetail', title: 'Child Router' }
-    ]);
+  // configureRouter(config, childRouter) {
+  //   config.map([
+  //     { route: 'detail',  name: 'detail',  moduleId: 'musicDetail', title: 'Child Router' }
+  //   ]);
 
-    this.childRouter = childRouter;
-  }
+  //   this.childRouter = childRouter;
+  // }
 }

@@ -12,6 +12,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -19,6 +20,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.2.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
@@ -42,7 +44,12 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.1",
     "jquery": "npm:jquery@2.2.3",
     "text": "github:systemjs/plugin-text@0.0.3",
+    "toastr": "github:CodeSeven/toastr@2.1.2",
     "underscore": "npm:underscore@1.8.3",
+    "github:CodeSeven/toastr@2.1.2": {
+      "css": "github:systemjs/plugin-css@0.1.21",
+      "jquery": "github:components/jquery@2.2.1"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
     },
