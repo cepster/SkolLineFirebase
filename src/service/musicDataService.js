@@ -4,6 +4,15 @@ import _ from 'underscore';
 let fb;
 const fbUrl = 'https://skolline.firebaseio.com/music';
 
+const sanitizeMusic = function(music) {
+  for (let i in music) {
+    if (typeof music[i] === 'undefined') {
+      delete music[i];
+    }
+  }
+  return music;
+};
+
 export class MusicDataService {
   constructor() {
     fb = new Firebase(fbUrl);
@@ -13,6 +22,10 @@ export class MusicDataService {
       let tune = snapshot.val();
       tune.id = snapshot.key();
       this.musicCache.push(tune);
+    });
+
+    fb.on('child_removed', (snapshot) => {
+      this.musicCache = _.without(this.musicCache, _.findWhere(this.musicCache, {id: snapshot.key()}));    
     });
   }
 
@@ -40,10 +53,14 @@ export class MusicDataService {
     if (music.id) {
       let tune = JSON.parse(JSON.stringify(music));
       delete tune.id;
-      fb.child(music.id).update(tune, callback);
+      fb.child(music.id).update(sanitizeMusic(tune), callback);
     } else {
-      fb.push(music, callback);
+      fb.push(sanitizeMusic(music), callback);
     }
+  }
+
+  deleteMusic(music, callback) {
+    fb.child(music.id).remove(callback);
   }
 
 }
