@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {MusicDataService} from '../service/musicDataService';
+import _ from 'underscore';
 
 let musicDataService;
 let router;
@@ -37,5 +38,13 @@ export class Music {
     ]);
 
     this.childRouter = childRouter;
+  }
+}
+
+export class FilterOnNameValueConverter {
+  toView(array, filter) {
+    return _.filter(array, (item) => {
+      return !filter || item.name.toLowerCase().includes(filter.toLowerCase());
+    });
   }
 }

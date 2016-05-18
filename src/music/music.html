@@ -5,7 +5,10 @@
     <div>
       <div class="col-md-2">
         <ul class="well nav nav-pills nav-stacked">
-         <li repeat.for="tune of getMusic()" class="${row.isActive ? 'active' : ''}">
+         <li>
+           <input type="text" value.bind="listFilter" placeholder="Search">
+         </li>
+         <li repeat.for="tune of getMusic() | filterOnName: listFilter" class="${row.isActive ? 'active' : ''}">
            <a route-href="route:detail; params.bind: {musicID:tune.id}">${tune.name}</a>
          </li>
          <li>
