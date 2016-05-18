@@ -130,28 +130,6 @@ The configuration is done by ```bundles.js``` file.
 ##### Optional
 Under ```options``` of ```dist/aurelia``` add ```rev: true``` to add bundle file revision/version.
 
-## Running The Unit Tests
-
-To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
-
-1. Ensure that the [Karma](http://karma-runner.github.io/) CLI is installed. If you need to install it, use the following command:
-
-  ```shell
-  npm install -g karma-cli
-  ```
-2. Install Aurelia libs for test visibility:
-
-  ```shell
-  jspm install aurelia-framework
-  jspm install aurelia-http-client
-  jspm install aurelia-router
-  ```
-3. You can now run the tests with this command:
-
-  ```shell
-  karma start
-  ```
-
 ## Exporting bundled production version
 A gulp task is already configured for that. Use the following command to export the app:
 
