@@ -1,15 +1,20 @@
+import { inject } from 'aurelia-framework';
 import * as toastr from 'toastr';
+import { MusicDataService } from '../service/musicDataService';
 
+let musicDataService;
+
+@inject(MusicDataService)
 export class MusicDetail {
-  constructor() {
+  constructor(_musicDataService) {
+    musicDataService = _musicDataService;
   }
 
   activate(params) {
     if (params.musicID !== '0') {
-      this.tune = {
-        _id: params.musicID,
-        name: 'test'
-      };
+      musicDataService.getMusicById(params.musicID).then((response) => {
+        this.tune = response;
+      });
     }
   }
 
@@ -18,6 +23,8 @@ export class MusicDetail {
   }
 
   save() {
-    toastr.success('Saved', {timeout: 2000});
+    musicDataService.saveMusic(this.tune, ()=> {
+      toastr.success('Saved', {timeout: 2000});
+    });
   }
 }

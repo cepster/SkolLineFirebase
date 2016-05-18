@@ -19,21 +19,25 @@ export class Music {
   }
 
   activate(params) {
-    return musicDataService.getAllMusic()
-             .then(response => {
-               this.music = response.content;
-             });
+    // return musicDataService.getAllMusic();
+            //  .then(response => {
+            //    this.music = [response.response];
+            //  });
   }
 
   loadDetail(id) {
     musicDataService.getMusicById(id)
       .then(response =>{
-        this.selectedMusic = response.content;
+        this.selectedMusic = response;
       });
   }
 
   newMusic() {
     router.navigateToRoute('musicDetail/0');
+  }
+  
+  getMusic() {
+    return musicDataService.musicCache;
   }
 
   // configureRouter(config, childRouter) {

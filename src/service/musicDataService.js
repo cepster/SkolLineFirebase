@@ -1,36 +1,49 @@
-import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-http-client';
-// import {Firebase} from 'firebase';
+// import Firebase from 'github:firebase/firebase-bower@3.0.0';
+import _ from 'underscore';
 
-// let http;
+let fb;
+const fbUrl = 'https://skolline.firebaseio.com/music';
 
-@inject(HttpClient)
 export class MusicDataService {
-  constructor(_http) {
-    // http = _http;
-    // fb = new Firebase("https://skolline.firebaseio.com/").child('music');
-  }
+  constructor() {
+    fb = new Firebase(fbUrl);
+    this.musicCache = [];
 
-  getAllMusic() {
-    // return http.get("/api/music");
-    return new Promise(function(resolve, reject) {
-      resolve({'content': [
-        {
-          _id: 1,
-          name: 'Smack',
-          href: 'detail/1'
-        },
-        {
-          _id: 2,
-          name: 'Skol B',
-          href: 'detail/2'
-        }
-      ]});
+    fb.on('child_added', (snapshot, id) => {
+      let tune = snapshot.val();
+      tune.id = snapshot.key();
+      this.musicCache.push(tune);
     });
   }
 
   getMusicById(id) {
-    // return http.get('/api/music/' + id);
+    let cached = _.find(this.musicCache, (tune) => {
+      return tune.id === id;
+    });
+
+    if (cached) {
+      return new Promise((resolve) => {
+        resolve(cached);
+      });
+    }
+
+    return new Promise((resolve) => {
+      fb.child(id).on('value', (snapshot) => {
+        let tune = snapshot.val();
+        tune.id = snapshot.key();
+        resolve(tune);
+      });
+    });
+  }
+
+  saveMusic(music, callback) {
+    if (music.id) {
+      let tune = JSON.parse(JSON.stringify(music));
+      delete tune.id;
+      fb.child(music.id).update(tune, callback);
+    } else {
+      fb.push(music, callback);
+    }
   }
 
 }
