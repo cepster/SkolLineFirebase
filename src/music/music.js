@@ -8,6 +8,8 @@ let router;
 @inject(Router, MusicDataService)
 export class Music {
 
+  heading = 'Our Music';
+
   constructor(_router, _musicDataService) {
     this.music = [];
     this.selectedMusic = undefined;
@@ -31,6 +33,14 @@ export class Music {
   }
 
   newMusic() {
-    router.navigateToRoute('musicDetail', { musicID: 0 });
+    router.navigateToRoute('musicDetail/0');
+  }
+
+  configureRouter(config, childRouter) {
+    config.map([
+      { route: 'detail',  name: 'detail',  moduleId: 'musicDetail', title: 'Child Router' }
+    ]);
+
+    this.childRouter = childRouter;
   }
 }

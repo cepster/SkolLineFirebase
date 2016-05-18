@@ -16,9 +16,9 @@ export class ButtonNavigate {
 
   bind() {
     $(this.element).click(() =>{
-      if(this.href) {
+      if (this.href) {
         location.href(this.href);
-      } else if(this.routehref) {
+      } else if (this.routehref) {
         this.router.navigateToRoute(this.routehref);
       }
     });

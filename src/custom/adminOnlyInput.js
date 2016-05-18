@@ -12,7 +12,7 @@ export class AdminOnlyInput {
   }
 
   attached() {
-    if(!this.authState.isAdmin()) {
+    if (!this.authState.isAdmin()) {
       $(this.element).prop('disabled', 'disabled');
     }
   }

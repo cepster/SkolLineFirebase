@@ -12,7 +12,7 @@ export class AdminOnly {
   }
 
   attached() {
-    if(!this.authState.isAdmin()) {
+    if (!this.authState.isAdmin()) {
       $(this.element).hide();
     }
   }

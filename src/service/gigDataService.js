@@ -32,7 +32,7 @@ export class GigDataService {
   }
 
   saveGig(gig) {
-    if(gig._id) {
+    if (gig._id) {
       return http.put(`/api/gig/${gig._id}`, gig);
     }
 

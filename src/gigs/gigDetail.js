@@ -15,7 +15,7 @@ export class GigDetail {
   }
 
   activate(params) {
-    if(params.gigID !== '0') {
+    if (params.gigID !== '0') {
       return gigDataService.getGigById(params.gigID)
                       .then(response => {
                         this.gig = response.content;
@@ -33,7 +33,7 @@ export class GigDetail {
   }
 
   deleteGig() {
-    if(this.gig._id) {
+    if (this.gig._id) {
       gigDataService.deleteGigById(this.gig._id)
         .then(response => {
           this.backToGigs();

@@ -25,16 +25,16 @@ export class Members {
 
   fillMember(member) {
     this.selectedMember = member;
-    if(!this.selectedMember.email) {
+    if (!this.selectedMember.email) {
       this.selectedMember.email = '';
     }
-    if(!this.selectedMember.name) {
+    if (!this.selectedMember.name) {
       this.selectedMember.name = '';
     }
-    if(!this.selectedMember.instrument) {
+    if (!this.selectedMember.instrument) {
       this.selectedMember.instrument = '';
     }
-    if(!this.selectedMember.phoneNumber) {
+    if (!this.selectedMember.phoneNumber) {
       this.selectedMember.phoneNumber = '';
     }
   }
@@ -49,7 +49,7 @@ export class Members {
   saveMember() {
     membersDataService.saveMember(this.selectedMember)
       .then(response => {
-        if(this.selectedMember._id) {
+        if (this.selectedMember._id) {
           alert('Saved!');
         } else {
           alert('Created!');

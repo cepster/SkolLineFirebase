@@ -27,7 +27,7 @@ export class MembersDataService {
   }
 
   saveMember(member) {
-    if(member._id) {
+    if (member._id) {
       return http.put('/api/member/' + member._id, member);
     }
 

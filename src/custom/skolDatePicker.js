@@ -1,6 +1,6 @@
 import {customAttribute, bindable, inject} from 'aurelia-framework';
 import $ from 'jquery';
-import * as jqueryui from 'jquery-ui';
+// import * as jqueryui from 'jquery-ui';
 
 @inject(Element)
 @customAttribute('date-picker')
