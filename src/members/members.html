@@ -1,54 +1,25 @@
 <template>
-  <div class="ui grid">
-    <div class="three wide column">
-      <div class="ui vertical fluid tabular menu">
-        <a repeat.for="member of members" click.delegate="$parent.loadDetail(member._id)"
-           class="item ${$parent.selectedMember._id==member._id? 'active': ''}">
-           ${member.name}
-         </a>
+  <require from="../custom/adminOnly"></require>
+  <require from="../converters/nameFilterValueConverter"></require>
+  <section class="au-animate">
+    <h2>${heading}</h2>
+    <div>
+      <div class="col-md-2">
+        <ul class="well nav nav-pills nav-stacked">
+         <li>
+           <input type="text" value.bind="listFilter" placeholder="Search">
+         </li>
+         <li repeat.for="member of getMembers() | filterOnName: listFilter" class="${row.isActive ? 'active' : ''}">
+           <a route-href="route:detail; params.bind: {memberID:member.id}">${member.name}</a>
+         </li>
+         <li>
+           <a route-href="route:detail; params.bind: {memberID:0}">+ New Member</a>
+         </li>
+        </ul>
+      </div>
+      <div class="col-md-10" style="padding: 0">
+        <router-view></router-view>
       </div>
     </div>
-    <div class="thirteen wide stretched column">
-      <div class="ui segment">
-        <div if.bind="!selectedMember">
-          Please select a member on the left to view detail
-        </div>
-        <div if.bind="selectedMember">
-          <form class="ui form">
-            <div class="field">
-              <label>Name</label>
-              <div class="ui input">
-                <input type="text" value.bind="selectedMember.name"/>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>Instrument</label>
-              <div class="ui input">
-                <input type="text" value.bind="selectedMember.instrument"/>
-              </div>
-            </div>
-
-            <div class="field">
-                <label>Email</label>
-                <div class="ui input">
-                  <input type="text" value.bind="selectedMember.email"/>
-                </div>
-            </div>
-
-            <div class="field">
-              <label>Phone Number</label>
-              <div class="ui input">
-                <input type="text" value.bind="selectedMember.phoneNumber"
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ui segment" if.bind="selectedMember">
-        <div class="ui primary button" click.delegate="saveMember()">Save</div>
-        <div class="ui button" click.delegate="deleteMember()">Delete</div>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>

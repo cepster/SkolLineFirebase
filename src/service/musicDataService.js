@@ -4,19 +4,12 @@ import { DataService } from './dataService';
 import { inject } from 'aurelia-framework';
 
 let fb;
-
-const sanitizeMusic = function(music) {
-  for (let i in music) {
-    if (typeof music[i] === 'undefined') {
-      delete music[i];
-    }
-  }
-  return music;
-};
+let dataService;
 
 @inject(DataService)
 export class MusicDataService {
-  constructor(dataService) {
+  constructor(_dataService) {
+    dataService = _dataService;
     fb = new Firebase(dataService.endpoint);
     this.musicCache = [];
 
@@ -55,9 +48,9 @@ export class MusicDataService {
     if (music.id) {
       let tune = JSON.parse(JSON.stringify(music));
       delete tune.id;
-      fb.child(music.id).update(sanitizeMusic(tune), callback);
+      fb.child(music.id).update(dataService.sanitizeObjectForFirebaseSave(tune), callback);
     } else {
-      fb.push(sanitizeMusic(music), callback);
+      fb.push(dataService.sanitizeObjectForFirebaseSave(music), callback);
     }
   }
 
