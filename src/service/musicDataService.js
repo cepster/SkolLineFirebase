@@ -10,7 +10,7 @@ let dataService;
 export class MusicDataService {
   constructor(_dataService) {
     dataService = _dataService;
-    fb = new Firebase(dataService.endpoint);
+    fb = new Firebase(dataService.getEndPoint('music'));
     this.musicCache = [];
 
     fb.on('child_added', (snapshot, id) => {

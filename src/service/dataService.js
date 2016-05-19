@@ -1,6 +1,6 @@
 export class DataService {
   constructor() {
-    this.endpoint = 'https://skolline.firebaseio.com/music';
+    this.endpoint = 'https://skolline.firebaseio.com';
   }
 
   sanitizeObjectForFirebaseSave(inObj) {
@@ -10,5 +10,9 @@ export class DataService {
       }
     }
     return inObj;
+  }
+
+  getEndPoint(partial) {
+    return `${this.endpoint}/${partial}`;
   }
 }

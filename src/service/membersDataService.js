@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import { DataService } from './dataService';
+import _ from 'underscore';
 
 let fb;
 let dataService;
@@ -9,7 +10,7 @@ export class MembersDataService {
 
   constructor(_dataService) {
     dataService = _dataService;
-    fb = new Firebase(dataService.endpoint);
+    fb = new Firebase(dataService.getEndPoint('members'));
     this.memberCache = [];
 
     fb.on('child_added', (snapshot) => {
@@ -19,7 +20,7 @@ export class MembersDataService {
     });
 
     fb.on('child_removed', (snapshot) => {
-      this.memberCache.without(this.memberCache, _.findWhere(this.memberCache, {id: snapshot.key()}));
+      this.memberCache = _.without(this.memberCache, _.findWhere(this.memberCache, {id: snapshot.key()}));
     });
   }
 
@@ -43,7 +44,7 @@ export class MembersDataService {
     });
   }
 
-  saveMember(member) {
+  saveMember(member, callback) {
     if (member._id) {
       let thisMember = JSON.parse(JSON.stringify(member));
       delete thisMember.id;
@@ -53,7 +54,7 @@ export class MembersDataService {
     }
   }
 
-  deleteMemberById(member, callback) {
+  deleteMember(member, callback) {
     fb.child(member.id).remove(callback);
   }
 }
