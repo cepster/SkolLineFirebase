@@ -37,4 +37,12 @@ export class AuthState {
     // return this.user.admin; FIX THIS
     return true;
   }
+
+  getProfileImageURL() {
+    if (this.user) {
+      return this.user.profileImageURL;
+    }
+
+    return '';
+  }
 }
