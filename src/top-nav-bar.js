@@ -1,43 +1,52 @@
 import {bindable} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
-import {DataService} from './service/dataService';
-import {AuthState} from './service/authState';
+import {Router} from 'aurelia-router';
+import * as toastr from 'toastr';
 
-let dataService;
-let authState;
-let ref;
 
-@inject(DataService, AuthState)
+//Firebase Plugin
+import {AuthenticationManager} from 'aurelia-firebase';
+
+let router;
+
+//Firebase auth manager
+let authManager;
+
+@inject(AuthenticationManager, Router)
 export class TopNavBar {
 
   @bindable router = null;
 
-  constructor(_dataService, _authState) {
-    dataService = _dataService;
-    authState = _authState;
+  constructor(_authManager, _router) {
+    authManager = _authManager;
+    router = _router;
 
-    this.authenticated = false;
+    this.setUserValues();
+  }
+
+  setUserValues() {
+    this.authenticated = authManager.currentUser.isAuthenticated;
+    this.userImage = authManager.currentUser.profileImageUrl;
   }
 
   login() {
-    ref = new Firebase(dataService.endpoint);
-    ref.authWithPassword({
-      email: this.email,
-      password: this.password
-    }, (error, authData) => {
-      if (error) {
-        console.log('Login Failed!', error);
-      } else {
-        console.log('Authenticated successfully with payload:', authData);
-        authState.setUser(authData.password);
-        this.userImage = authState.getProfileImageURL();
-        this.authenticated = true;
-      }
-    });
+    this.message = null;
+    console.log(authManager);
+    authManager.signIn(this.email, this.password)
+      .then(() => {
+        this.setUserValues();
+        router.navigateToRoute('music');
+      })
+      .catch((e) => {
+        toastr.success(e.message, {timeout: 2000});
+      });
   }
 
   logout() {
-    ref.unauth();
-    this.authenticated = false;
+    authManager.signOut().then(() => {
+      this.authenticated = false;
+      router.navigateToRoute('welcome');
+      toastr.success('You have successfully been logged out');
+    });
   }
 }
