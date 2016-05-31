@@ -2,15 +2,18 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import * as toastr from 'toastr';
 import { MusicDataService } from '../service/musicDataService';
+import {AuthenticationManager} from 'aurelia-firebase';
 
 let musicDataService;
 let router;
+let authManager;
 
-@inject(MusicDataService, Router)
+@inject(MusicDataService, Router, AuthenticationManager)
 export class MusicDetail {
-  constructor(_musicDataService, _router) {
+  constructor(_musicDataService, _router, _authManager) {
     musicDataService = _musicDataService;
     router = _router;
+    authManager = _authManager;
   }
 
   activate(params) {
@@ -21,6 +24,8 @@ export class MusicDetail {
     } else {
       this.tune = {};
     }
+
+    this.isAdmin = authManager.currentUser.isAdmin;
   }
 
   save() {

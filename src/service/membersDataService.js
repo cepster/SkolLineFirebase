@@ -5,6 +5,8 @@ import _ from 'underscore';
 let fb;
 let dataService;
 
+const defaultPassword = 'skolvikings';
+
 @inject(DataService)
 export class MembersDataService {
 
@@ -44,17 +46,49 @@ export class MembersDataService {
     });
   }
 
+  getMemberByUid(id) {
+    let cached = _.find(this.memberCache, (member) => {
+      return member.uid === id;
+    });
+
+    if (cached) {
+      return new Promise((resolve) => {
+        resolve(cached);
+      });
+    }
+
+    return new Promise((resolve) => {
+      fb.on('value', (snapshot) => {
+        _.each(snapshot.val(), (member) => {
+          if (member.uid === id) {
+            resolve(member);
+          }
+        });
+      });
+    });
+  }
+
   saveMember(member, callback) {
-    if (member._id) {
+    if (member.id) {
       let thisMember = JSON.parse(JSON.stringify(member));
       delete thisMember.id;
       fb.child(member.id).update(dataService.sanitizeObjectForFirebaseSave(thisMember), callback);
     } else {
-      fb.push(dataService.sanitizeObjectForFirebaseSave(member), callback);
+      this.generateUser(member.email).then((userData) => {
+        member.uid = userData.uid;
+        fb.push(dataService.sanitizeObjectForFirebaseSave(member), callback);
+      });
     }
   }
 
   deleteMember(member, callback) {
     fb.child(member.id).remove(callback);
+  }
+
+  generateUser(emailAddress) {
+    return new Firebase(dataService.endpoint).createUser({
+      email: emailAddress,
+      password: defaultPassword
+    });
   }
 }

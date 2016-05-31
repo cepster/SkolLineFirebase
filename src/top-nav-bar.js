@@ -2,14 +2,9 @@ import {bindable} from 'aurelia-framework';
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import * as toastr from 'toastr';
-
-
-//Firebase Plugin
 import {AuthenticationManager} from 'aurelia-firebase';
 
 let router;
-
-//Firebase auth manager
 let authManager;
 
 @inject(AuthenticationManager, Router)
@@ -31,7 +26,6 @@ export class TopNavBar {
 
   login() {
     this.message = null;
-    console.log(authManager);
     authManager.signIn(this.email, this.password)
       .then(() => {
         this.setUserValues();
