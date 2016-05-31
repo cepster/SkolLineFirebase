@@ -41,6 +41,8 @@ export class TopNavBar {
       .then(() => {
         this.setUserValues();
         router.navigateToRoute('music');
+        this.email = '';
+        this.password = '';
       })
       .catch((e) => {
         toastr.success(e.message, {timeout: 2000});
