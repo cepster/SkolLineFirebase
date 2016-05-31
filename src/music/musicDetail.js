@@ -15,8 +15,6 @@ export class MusicDetail {
     musicDataService = _musicDataService;
     router = _router;
     authManager = _authManager;
-
-    this.editMode = false;
   }
 
   activate(params) {
@@ -30,6 +28,7 @@ export class MusicDetail {
     }
 
     this.isAdmin = authManager.currentUser.isAdmin;
+    this.editMode = false;
   }
 
   save() {
@@ -48,5 +47,9 @@ export class MusicDetail {
 
   edit() {
     this.editMode = true;
+  }
+
+  cancelEdit() {
+    this.editMode = false;
   }
 }
