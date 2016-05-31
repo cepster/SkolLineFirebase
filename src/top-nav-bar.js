@@ -3,18 +3,21 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import * as toastr from 'toastr';
 import {AuthenticationManager} from 'aurelia-firebase';
+import {MembersDataService} from './service/MembersDataService';
 
 let router;
 let authManager;
+let membersDataService;
 
-@inject(AuthenticationManager, Router)
+@inject(AuthenticationManager, Router, MembersDataService)
 export class TopNavBar {
 
   @bindable router = null;
 
-  constructor(_authManager, _router) {
+  constructor(_authManager, _router, _membersDataService) {
     authManager = _authManager;
     router = _router;
+    membersDataService = _membersDataService;
 
     this.setUserValues();
   }
@@ -22,6 +25,14 @@ export class TopNavBar {
   setUserValues() {
     this.authenticated = authManager.currentUser.isAuthenticated;
     this.userImage = authManager.currentUser.profileImageUrl;
+
+    if (authManager.currentUser) {
+      membersDataService.getMemberByUid(authManager.currentUser.uid).then((data) => {
+        authManager.currentUser.isAdmin = data.isAdmin;
+        authManager.currentUser.name = data.name;
+        this.currentLoggedInUser = data.name;
+      });
+    }
   }
 
   login() {

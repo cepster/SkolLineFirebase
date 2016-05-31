@@ -3,17 +3,20 @@ import { Router } from 'aurelia-router';
 import * as toastr from 'toastr';
 import { MusicDataService } from '../service/musicDataService';
 import {AuthenticationManager} from 'aurelia-firebase';
+import {AuthState} from '../service/authState';
 
 let musicDataService;
 let router;
 let authManager;
 
-@inject(MusicDataService, Router, AuthenticationManager)
+@inject(MusicDataService, Router, AuthenticationManager, AuthState)
 export class MusicDetail {
   constructor(_musicDataService, _router, _authManager) {
     musicDataService = _musicDataService;
     router = _router;
     authManager = _authManager;
+
+    this.editMode = false;
   }
 
   activate(params) {
@@ -31,7 +34,7 @@ export class MusicDetail {
   save() {
     musicDataService.saveMusic(this.tune, ()=> {
       toastr.success('Saved', {timeout: 2000});
-      router.navigateToRoute('music');
+      this.editMode = false;
     });
   }
 
@@ -40,5 +43,9 @@ export class MusicDetail {
       toastr.success('The music has been deleted');
       router.navigateToRoute('music');
     });
+  }
+
+  edit() {
+    this.editMode = true;
   }
 }
