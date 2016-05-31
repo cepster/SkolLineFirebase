@@ -12,7 +12,7 @@
          <li repeat.for="tune of getMusic() | filterOnName: listFilter" class="${row.isActive ? 'active' : ''}">
            <a route-href="route:detail; params.bind: {musicID:tune.id}">${tune.name}</a>
          </li>
-         <li>
+         <li show.bind="isAdmin">
            <a route-href="route:detail; params.bind: {musicID:0}">+ New Music</a>
          </li>
         </ul>

@@ -2,15 +2,18 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import * as toastr from 'toastr';
 import { MembersDataService } from '../service/membersDataService';
+import {AuthenticationManager} from 'aurelia-firebase';
 
 let membersDataService;
 let router;
+let authManager;
 
-@inject(MembersDataService, Router)
+@inject(MembersDataService, Router, AuthenticationManager)
 export class MemberDetail {
-  constructor(_membersDataService, _router) {
+  constructor(_membersDataService, _router, _authManager) {
     membersDataService = _membersDataService;
     router = _router;
+    authManager = _authManager;
   }
 
   activate(params) {
@@ -21,12 +24,15 @@ export class MemberDetail {
     } else {
       this.member = {};
     }
+
+    this.isAdmin = authManager.currentUser.isAdmin;
+    this.editMode = false;
   }
 
   save() {
     membersDataService.saveMember(this.member, () => {
       toastr.success('Saved', {timeout: 2000});
-      router.navigateToRoute('members');
+      this.editMode = false;
     });
   }
 
@@ -35,5 +41,9 @@ export class MemberDetail {
       toastr.success('The member has been deleted');
       router.navigateToRoute('members');
     });
+  }
+
+  edit() {
+    this.editMode = true;
   }
 }

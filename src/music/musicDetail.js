@@ -26,6 +26,7 @@ export class MusicDetail {
       });
     } else {
       this.tune = {};
+      this.editMode = true;
     }
 
     this.isAdmin = authManager.currentUser.isAdmin;

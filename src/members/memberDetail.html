@@ -7,13 +7,16 @@
         </div>
         <div class="panel-body">
             <form role="form" class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group" show.bind="editMode">
                     <label class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                         <input type="text" placeholder="name of the member" class="form-control" value.bind="member.name">
                     </div>
                 </div>
-                <div class="form-group">
+                <div show.bind="!editMode">
+                    <b>${member.name}</b>
+                </div>
+                <div class="form-group" show.bind="editMode">
                     <label class="col-sm-2 control-label">Instrument</label>
                     <div class="col-sm-10">
                         <select bind.value="member.instrument" class="form-control">
@@ -24,19 +27,28 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
+                <div show.bind="!editMode">
+                    <p>${member.instrument}</p>
+                </div>
+                <div class="form-group" show.bind="editMode">
                     <label class="col-sm-2 control-label">Phone Number</label>
                     <div class="col-sm-10">
                         <input type="text" placeholder="phone number of the member" class="form-control" value.bind="member.phone">
                     </div>
                 </div>
-                <div class="form-group">
+                <div show.bind="!editMode">
+                    <p>${member.phone}</p>
+                </div>
+                <div class="form-group" show.bind="editMode">
                     <label class="col-sm-2 control-label">Email Address</label>
                     <div class="col-sm-10">
                         <input type="text" placeholder="email address of the member" class="form-control" value.bind="member.email">
                     </div>
                 </div>
-                <div class="form-group">
+                <div show.bind="!editMode">
+                    <p>${member.email}</p>
+                </div>
+                <div class="form-group" show.bind="editMode">
                     <label class="col-sm-2 control-label">Is Group Admin</label>
                     <div class="col-sm-10">
                         <input type="checkbox" class="form-control" model.bind="member.isAdmin" checked.bind="member.isAdmin"/>
@@ -47,7 +59,8 @@
     </div>
 
     <div class="button-bar">
-        <button class="btn btn-success" click.delegate="save()" disabled.bind="!member || !member.name">Save</button>
-        <button class="btn btn-danger" click.delegate="delete()" disabled.bind="!member || !member.id">Delete</button>
+        <button class="btn btn-success" click.delegate="save()" disabled.bind="!member || !member.name" show.bind="editMode && isAdmin">Save</button>
+        <button class="btn btn-danger" click.delegate="delete()" disabled.bind="!member || !member.id" show.bind="editMode && isAdmin">Delete</button>
+        <button class="btn btn-info" click.delegate="edit()" show.bind="!editMode && isAdmin">Edit</button>
     </div>
 </template>
